@@ -8,8 +8,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import com.sun.glass.ui.MenuItem;
-
+import it.polito.tdp.invovinanumero.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +20,8 @@ import javafx.scene.layout.HBox;
 
 public class FXMLController {
 
+	private Model model;
+	
 	private int NMAX;
 	private int TMAX;
 	private LinkedList<Integer> inseriti = new LinkedList<Integer>();
@@ -28,9 +29,7 @@ public class FXMLController {
 	private int iMax;
 	private int segreto;
 	private int tentativiFatti;
-	private boolean inGioco = false;
-	
-    @FXML // ResourceBundle that was given to the FXMLLoader
+	@FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
     
     @FXML // URL location of the FXML file that was given to the FXMLLoader
@@ -115,8 +114,6 @@ public class FXMLController {
     	this.iMax=NMAX;
     	this.segreto = (int) ((Math.random()*NMAX)+1);
     	this.tentativiFatti = 0;
-    	this.inGioco = true;
-    	
     	//gestione dell'interfaccia
     	this.txtTentativi.setText(Integer.toString(TMAX));
     	this.txtRisultato.clear();
@@ -189,7 +186,6 @@ public class FXMLController {
     		//HO INDOVINATO
     		this.lblIntervallo.setText("");
     		txtRisultato.setText("HAI VINTO CON "+this.tentativiFatti+" TENTATIVI");
-    		this.inGioco = false;
     		this.layoutTentativo.setDisable(true);
     		return;
     	}
@@ -198,7 +194,6 @@ public class FXMLController {
     		//ho esaurito i tentativi
     		this.lblIntervallo.setText("");
     		txtRisultato.setText("HAI PERSO, IL SEGRETO ERA: "+this.segreto);
-    		this.inGioco = false;
     		this.layoutTentativo.setDisable(true);
     		return;
     	}
@@ -240,5 +235,9 @@ public class FXMLController {
         assert btnProva != null : "fx:id=\"btnProva\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
 
+    }
+    
+    public void setModel(Model model) {
+    	this.model = model;
     }
 }
